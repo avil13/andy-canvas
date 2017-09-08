@@ -2,14 +2,24 @@ package com.example.avil.trycanvas;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+
+import static android.content.Context.WINDOW_SERVICE;
 
 /**
  * Created by avil on 08.09.17.
@@ -45,6 +55,8 @@ public class CanvasView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        drawImg(canvas);
+
         canvas.drawPath(path, paint);
     }
 
@@ -55,7 +67,6 @@ public class CanvasView extends View {
         bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
     }
-
 
     private void startTouch(float x, float y) {
         path.moveTo(x, y);
@@ -76,13 +87,13 @@ public class CanvasView extends View {
     }
 
 
-    public void clearCanvas(){
+    public void clearCanvas() {
         path.reset();
         invalidate();
     }
 
 
-    private void upTouch(){
+    private void upTouch() {
         path.lineTo(mX, mY);
     }
 
@@ -92,15 +103,14 @@ public class CanvasView extends View {
         float x = event.getX();
         float y = event.getY();
 
-
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                startTouch(x ,y);
+                startTouch(x, y);
                 invalidate();
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                moveTouch(x ,y);
+                moveTouch(x, y);
                 invalidate();
                 break;
 
@@ -110,13 +120,19 @@ public class CanvasView extends View {
                 break;
 
         }
-
         return true;
     }
 
 
+    // перемещение стикера
+    // определяем коснулся ли тач стикера
+    // если да, то находим координату которой коснулся
+    // если идет претягивание то смещаем стикер на разницу координат при перетягивании
 
-
+    public void drawImg(Canvas canvas) {
+        Bitmap stiker = BitmapFactory.decodeResource(context.getResources(), R.drawable.img_8);
+        canvas.drawBitmap(stiker, 0, 0, null);
+    }
 }
 
 
