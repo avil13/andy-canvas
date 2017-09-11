@@ -20,11 +20,4 @@ public class MainActivity extends AppCompatActivity {
     public void clearCanvas(View v){
         canvasView.clearCanvas();
     }
-
-    public void insertImage(View v){
-        Toast toast;
-        toast = Toast.makeText(getApplicationContext(), "ok", Toast.LENGTH_SHORT);
-        toast.show();
-//        canvasView.drawImg();
-    }
 }
