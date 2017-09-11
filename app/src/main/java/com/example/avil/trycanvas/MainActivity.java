@@ -20,4 +20,12 @@ public class MainActivity extends AppCompatActivity {
     public void clearCanvas(View v){
         canvasView.clearCanvas();
     }
+
+
+    public void rotateRight(View v){
+        canvasView.rotate(true);
+    }
+    public void rotateLeft(View v){
+        canvasView.rotate(false);
+    }
 }
